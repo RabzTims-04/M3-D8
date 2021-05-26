@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>M3-D8</title>
+    <style>
+      body{
+        color: rgb(201, 188, 188);
+        background-color: black;
+      }
+
+      a{
+        text-decoration: none;
+        color: rgb(250, 248, 248);
+      }
+
+      a:hover{
+        color: rgb(15, 14, 14);
+      }
+
+      th{
+        color: black;
+        text-shadow: 1px 1px rgba(250, 248, 248, 0.3);
+        font-size: larger;
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Amazon</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./back.html">Form</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <h1 class="text-center mt-5">Amazon Description</h1>
+
+    <div class="container-fluid mt-5">
+      <table class="table table-striped table-dark">
+        <thead">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col ">Description</th>
+            <th scope="col">Brand</th>
+            <th scope="col">URL</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+         <!--  <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+    
+    <script>      
+      window.onload = async function(){
+
+        const url = "https://striveschool-api.herokuapp.com/api/product/"
+        const tableBody = document.getElementById('table-body')
+        /* fetch(url, { 
+        'method': "GET",
+        'headers': {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlMzEyMGNlYWY0ODAwMTVjOTE4NjAiLCJpYXQiOjE2MjIwMjg1NzYsImV4cCI6MTYyMzIzODE3Nn0.6obTCVNcU0bB9gni-s0bcgJiPp7PRSMReNBu7UTkeJc"
+        } 
+    }).then((res) => res.json())
+    .then((data) => {
+            //forEach
+            console.log(data)
+    })
+    .catch(err => console.log(err)) */
+
+    try{
+      const response = await fetch(url, { 
+        'method': "GET",
+        'headers': {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlMzEyMGNlYWY0ODAwMTVjOTE4NjAiLCJpYXQiOjE2MjIwMjg1NzYsImV4cCI6MTYyMzIzODE3Nn0.6obTCVNcU0bB9gni-s0bcgJiPp7PRSMReNBu7UTkeJc"
+        } 
+    })
+
+    const brandinfo = await response.json()
+    console.log(brandinfo);
+
+    if(brandinfo.length > 0){
+      brandinfo.forEach((info, i) => {
+        tableBody.innerHTML += `<tr>
+                                  <th scope="row">${i}</th>
+                                  <td>${info.name}</td>
+                                  <td>${info.description}</td>
+                                  <td>${info.brand}</td>
+                                  <td><a href="${info.imageUrl}">Image</a></td>
+                                  <td>${info.price} €</td>
+                                </tr>`     
+      });
+    }else {
+      tableBody.innerHTML = `<div class="alert alert-info" role="alert">
+                                No events planned yet!
+                              </div>`;
+          }
+    }catch(error){
+      console.log(error);
+    }
+      }
+    </script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+  </body>
+</html>
+
+<!--  <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+          </tr> 
+        -->
+    <!--          
+            You are building the new Amazon.
+            This time you are also responsible for the back office.
+            THIS is you CRUD endpoint
+            https://striveschool-api.herokuapp.com/api/product/
+            The product model is 
+            {
+                "_id": "5d318e1a8541744830bef139", //SERVER GENERATED
+                "name": "app test 1",  //REQUIRED
+                "description": "somthing longer", //REQUIRED
+                "brand": "nokia", //REQUIRED
+                "imageUrl": "https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80", //REQUIRED
+                "price": 100, //REQUIRED
+                "userId": "admin", //SERVER GENERATED
+                "createdAt": "2019-07-19T09:32:10.535Z", //SERVER GENERATED
+                "updatedAt": "2019-07-19T09:32:10.535Z", //SERVER GENERATED
+                "__v": 0 //SERVER GENERATED
+            }
+            #---------------------------------------------------------------#
+            EVERY REST API CALL SHOULD BE AUTHENTICATED. 
+            Every request to the API should use Token Based Authentication to secure access to the contents.
+            You can get your token by registering on: strive.school/studentlogin
+            
+            fetch("https://striveschool-api.herokuapp.com/api/put-your-endpoint-here/", {
+headers: {
+"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlMzEyMGNlYWY0ODAwMTVjOTE4NjAiLCJpYXQiOjE2MjIwMjg1NzYsImV4cCI6MTYyMzIzODE3Nn0.6obTCVNcU0bB9gni-s0bcgJiPp7PRSMReNBu7UTkeJc"
+}
+}
+            Authorization: Bearer ###########
+            Where ######### is the access_token returned by the endpoint.
+            #---------------------------------------------------------------#
+            Today you have to implement:
+            - A backoffice page, where you can insert the product by specifying the parameters
+            - A front page, where the user can see the available products
+            ------ N.B. ------
+            Tokens duration is set to 14 days. Whenever you'll need to obtain a new one you can send the following request:
+            
+            POST https://striveschool-api.herokuapp.com/api/account/login
+            {
+                "username": "testusername@yourmail.com",
+                "password":"pass"
+            }   
+        -->
