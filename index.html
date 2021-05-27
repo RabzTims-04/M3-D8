@@ -15,19 +15,44 @@
         background-color: black;
       }
 
-      a{
-        text-decoration: none;
-        color: rgb(250, 248, 248);
+      .card{
+        background-color: rgb(39, 36, 36);
       }
 
-      a:hover{
-        color: rgb(15, 14, 14);
+      .card h5{
+        color: orange;
       }
 
-      th{
-        color: black;
-        text-shadow: 1px 1px rgba(250, 248, 248, 0.3);
-        font-size: larger;
+      .card p{
+        color: blue;
+      }
+
+      .card img{
+        max-height: 11rem;
+      }
+
+      .list-group-item{
+        background-color: rgb(39, 36, 36);
+      }      
+
+      nav>a{
+        color: blue!important;
+      }
+
+      nav .active a{
+        color: blue!important;
+      }
+
+      h1{
+        color: orange;
+      }
+
+      .card-link{
+        color: orange;
+      }
+
+      .card-link:hover{
+        color: white;
       }
     </style>
   </head>
@@ -52,36 +77,16 @@
 
     <h1 class="text-center mt-5">Amazon Description</h1>
 
-    <div class="container-fluid mt-5">
-      <table class="table table-striped table-dark">
-        <thead">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col ">Description</th>
-            <th scope="col">Brand</th>
-            <th scope="col">URL</th>
-            <th scope="col">Price</th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-         <!--  <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr> -->
-        </tbody>
-      </table>
+    <div class="container mt-5">
+      <div id="card-row" class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+      </div>
     </div>
     
     <script>      
       window.onload = async function(){
 
         const url = "https://striveschool-api.herokuapp.com/api/product/"
-        const tableBody = document.getElementById('table-body')
+        const cardRow = document.getElementById('card-row')
         /* fetch(url, { 
         'method': "GET",
         'headers': {
@@ -107,17 +112,22 @@
 
     if(brandinfo.length > 0){
       brandinfo.forEach((info, i) => {
-        tableBody.innerHTML += `<tr>
-                                  <th scope="row">${i}</th>
-                                  <td>${info.name}</td>
-                                  <td>${info.description}</td>
-                                  <td>${info.brand}</td>
-                                  <td><a href="${info.imageUrl}">Image</a></td>
-                                  <td>${info.price} €</td>
-                                </tr>`     
+       cardRow.innerHTML += `<div class="col mb-4">
+                                    <div class="card" style="width: 18rem;height:21rem;">
+                                      <img src="${info.imageUrl}" class="card-img-top img-fluid cover" alt="..." style="object-fit: cover;">
+                                      <div class="card-body text-center">
+                                        <h5 class="card-title">${info.name}</h5>
+                                      <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">${info.brand}</li>
+                                      </ul>
+                                      <a href="./detail.html?id=${info._id}" class="btn btn-primary btn-sm text-light ml-3">VIEW DETAILS</a>     
+                                      </div>
+                                      </div>
+                                    </div>
+                                  </div>`     
       });
     }else {
-      tableBody.innerHTML = `<div class="alert alert-info" role="alert">
+      cardRow.innerHTML = `<div class="alert alert-info" role="alert">
                                 No events planned yet!
                               </div>`;
           }
