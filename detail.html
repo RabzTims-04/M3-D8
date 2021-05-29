@@ -103,8 +103,11 @@
                     "Content-Type": "application/json"
                     } 
                 })
+
+                console.log(response);
                 if(response.ok){
                     const productData = await response.json()
+                    console.log(productData);
                     productImg.innerHTML = `<img src="${
                                         productData.imageUrl
                                     }" class="img-fluid mt-5"/>`
